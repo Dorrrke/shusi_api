@@ -1,8 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/Dorrrke/shusi_api/internal/server"
+)
 
 func main() {
-	fmt.Println("Hello, World!")
-	fmt.Println("NIk pidr ( v2.0 )")
+	srv := server.NewShushiAPI(":8080")
+	if err := srv.Start(); err != nil {
+		fmt.Println(err)
+	}
 }
