@@ -1,6 +1,8 @@
 package server
 
 import (
+	"net/http"
+
 	"github.com/Dorrrke/shusi_api/internal/models"
 	"github.com/Dorrrke/shusi_api/internal/storage"
 	"github.com/gin-gonic/gin"
@@ -8,7 +10,7 @@ import (
 )
 
 type ShushiAPI struct {
-	Addr string
+	Addr string // Адрес запуска сервера
 }
 
 func NewShushiAPI(addr string) *ShushiAPI {
@@ -18,21 +20,19 @@ func NewShushiAPI(addr string) *ShushiAPI {
 func (s *ShushiAPI) Start() error {
 	router := gin.Default()
 
+	router.GET("/", baseHandler)
 	router.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",
 		})
 	})
-
-	router.GET("/", func(ctx *gin.Context) {
-		ctx.JSON(200, gin.H{
-			"message": "hello world",
-		})
-	})
-
 	router.POST("/member", addMemberHandler)
 
 	return router.Run(s.Addr)
+}
+
+func baseHandler(ctx *gin.Context) {
+	ctx.String(http.StatusOK, "Добро пожаловать на сервер ShushiShop")
 }
 
 func addMemberHandler(ctx *gin.Context) {

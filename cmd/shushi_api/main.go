@@ -7,8 +7,8 @@ import (
 )
 
 func main() {
-	srv := server.NewShushiAPI(":8080")
-	if err := srv.Start(); err != nil {
+	api := server.NewShushiAPI(":8080")
+	if err := api.StartAPI(); err != nil {
 		fmt.Println(err)
 	}
 }
